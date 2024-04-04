@@ -61,4 +61,10 @@ public class Functions extends BaseTestCase {
         // Verify search results
         Assert.assertTrue(driver.getTitle().contains("Selenium"));
     }
+
+    @Test
+    public void toto(){
+        String x = xmlReader.getValueByName("EX","EX","URL");
+        System.out.println(x);
+    }
 }

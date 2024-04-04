@@ -3,12 +3,8 @@ package Framework;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 
 public class XMLReader {
@@ -17,12 +13,18 @@ public class XMLReader {
     public XMLReader(String xmlFilePath) {
         this.xmlFilePath = xmlFilePath;
     }
+
     public String getValueByName(String sectionName, String tagName, String nameAttribute) {
         try {
             // Parse the XML file
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = factory.newDocumentBuilder();
-            InputStream inputStream = new FileInputStream(new File(xmlFilePath));
+
+            // Access the XML file as a stream from the classpath
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(xmlFilePath);
+            if (inputStream == null) {
+                throw new RuntimeException("Resource not found: " + xmlFilePath);
+            }
             Document document = builder.parse(inputStream);
 
             // Get the node list of the specified section
@@ -47,5 +49,4 @@ public class XMLReader {
         }
         return null;
     }
-
 }

@@ -9,7 +9,7 @@ public class BaseTestCase {
     protected GUIHandler guiHandler;
     protected  XMLReader xmlReader;
 
-    String xmlFilePath = "../Resources.xml";
+    String xmlFilePath = "Resources.xml";
 
     // Constructor
     public BaseTestCase(WebDriver driver) {
