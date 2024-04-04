@@ -16,7 +16,7 @@ public class GUIHandler {
 
     public GUIHandler(WebDriver driver) {
         this.driver = driver;
-        this.timeOut = Duration.ofSeconds(15);
+        this.timeOut = Duration.ofSeconds(30);
     }
 
     public void openBrowser(String url) {

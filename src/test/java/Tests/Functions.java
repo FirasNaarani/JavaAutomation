@@ -2,21 +2,29 @@ package Tests;
 
 import Framework.BaseTestCase;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.text.MessageFormat;
 import java.time.Duration;
 import java.util.List;
 
 public class Functions extends BaseTestCase {
 
-
     public Functions() {
-        super(new ChromeDriver()); // Instantiate WebDriver using ChromeDriver
+        super(getChromeDriverWithMaximizedWindow());
+    }
+
+    private static WebDriver getChromeDriverWithMaximizedWindow() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized");
+        return new ChromeDriver(options);
     }
 
     public Boolean areParametersEmpty(String url, String tableId, Integer searchColumn, String searchText, Integer returnColumnText) {
@@ -55,7 +63,7 @@ public class Functions extends BaseTestCase {
                 if (table != null)
                 {
                     System.out.println("Table Found");
-                    String Result = getTableCellText(table,searchColumn,searchText,returnColumnText);
+                    String Result = getTableCellText(table, searchColumn, searchText, returnColumnText);
                     System.out.println("RESULT =\t" + Result);
                 } else
                     System.out.println("Not Found");
@@ -68,6 +76,28 @@ public class Functions extends BaseTestCase {
         }
     }
 
+    public String getTableCellText(WebElement table, String searchColumn, String searchText, int returnColumnText) {
+        int sc;
+        switch (searchColumn)
+        {
+            case "Company":
+                sc = 1;
+                break;
+            case "Contact":
+                sc = 2;
+                break;
+            case "Country":
+                sc = 3;
+                break;
+            default:
+                return null;
+        }
+        if(sc == returnColumnText){
+            Assert.fail("Can't Be 'Search Column' and 'Return Column' Same Value");
+        }
+        return getTableCellText(table, sc, searchText, returnColumnText);
+    }
+
     public String getTableCellText(WebElement table, int searchColumn, String searchText, int returnColumnText) {
         try
         {
@@ -77,19 +107,32 @@ public class Functions extends BaseTestCase {
                 String tableHeaderId = xmlReader.getValueByName("TABLE_HEADER_XPATH");
                 String tableCellsId = xmlReader.getValueByName("TABLE_CELLS_IN_ROWS_XPATH");
 
-                //WebElement tableHeader = guiHandler.findElementByXPath(tableHeaderId);
-
                 int numberOfColumns = guiHandler.countVisibleElementsByXPath(tableHeaderId); //3
                 int numberOfCells = guiHandler.countVisibleElementsByXPath(tableCellsId); //18
+                //TODO check the count
 
                 if (searchColumn <= numberOfColumns && returnColumnText <= numberOfColumns && numberOfCells != 0)
                 {
-                    List<WebElement> tableCells = guiHandler.findElementsByXPath(tableCellsId);
+                    String searchTextId = xmlReader.getValueByName("SEARCH_TEXT_XPATH");
+                    String xPathString = String.format(searchTextId, searchText);
+                    System.out.println(xPathString);
 
+                    WebElement cell = guiHandler.findElementByXPath(xPathString);
+                    if (cell != null)
+                    {
+                        Assert.fail(String.format("Search Text = '%s', Wasn't Found in the Table", searchText));
+                    } else
+                    {
+                        List<WebElement> tableCells = guiHandler.findElementsByXPath(tableCellsId);
 
-                    WebElement x = guiHandler.getElementByIndex(tableCells, 0);
-                    System.out.println(x.getText());
+                        int index = tableCells.indexOf(cell);
+                        int num_row = (index / numberOfColumns) + 1;
+                        System.out.println(index);
 
+//                        WebElement x = guiHandler.getElementByIndex(tableCells, 0);
+//                        System.out.println(x.getText());
+
+                    }
                 } else
                 {
                     System.out.println("THE SEARCH COLUMN OUT OF THE CURRENT TABLE");
@@ -112,27 +155,11 @@ public class Functions extends BaseTestCase {
     }
 
     @Test
-    public void testGoogleSearch() {
-        // Open Google homepage
-        driver.get("https://www.google.com");
-
-        // Perform a search
-        driver.findElement(By.name("q")).sendKeys("Selenium");
-
-        // Submit the search query
-        driver.findElement(By.name("btnK")).submit();
-
-        // Wait for search results to load
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.titleContains("Selenium"));
-
-        // Verify search results
-        Assert.assertTrue(driver.getTitle().contains("Selenium"));
-    }
-
-    @Test
     public void toto() {
-        String x = xmlReader.getValueByName("EX", "EX", "URL");
-        System.out.println(x);
+        String searchTextId = xmlReader.getValueByName("SEARCH_TEXT_XPATH");
+        String searchText = xmlReader.getValueByName("SEARCH_TEXT");
+
+        String xPathString = String.format(searchTextId, searchText);
+        System.out.println(xPathString);
     }
 }
