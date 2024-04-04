@@ -28,6 +28,7 @@ public class BaseTestCase {
         if (driver != null)
         {
             driver.quit();
+            driver = null;
         }
         System.out.println(this.getClass().getSimpleName() + "\t|\tTear Down\t-\tDone");
     }

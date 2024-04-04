@@ -14,6 +14,10 @@ public class XMLReader {
         this.xmlFilePath = xmlFilePath;
     }
 
+    public String getValueByName(String nameAttribute) {
+        return getValueByName("EX", "EX", nameAttribute);
+    }
+
     public String getValueByName(String sectionName, String tagName, String nameAttribute) {
         try {
             // Parse the XML file

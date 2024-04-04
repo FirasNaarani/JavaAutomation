@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+import java.util.List;
 
 public class Functions extends BaseTestCase {
 
@@ -18,28 +19,95 @@ public class Functions extends BaseTestCase {
         super(new ChromeDriver()); // Instantiate WebDriver using ChromeDriver
     }
 
+    public Boolean areParametersEmpty(String url, String tableId, Integer searchColumn, String searchText, Integer returnColumnText) {
+        // Check if any of the parameters is null or empty
+        if ((url != null) &&
+                (tableId != null) &&
+                (searchColumn > 0) &&
+                (searchText != null) &&
+                (returnColumnText != searchColumn && returnColumnText != 0))
+        {
+            return true;
+        }
+        return false;
+    }
+
     @Test
     public void Ex1() {
 
-        String url = xmlReader.getValueByName("EX","EX","URL");
-        guiHandler.openBrowser(url);
-//        guiHandler.openBrowser("http://www.w3schools.com/html/html_tables.asp");
-        WebElement table = guiHandler.findElementByXPath("//table[@id='customers']");
-        if (table != null)
+        // ENV Params
+        String url = xmlReader.getValueByName("URL");
+        String tableId = xmlReader.getValueByName("TABLE_XPATH");
+        int searchColumn = Integer.parseInt(xmlReader.getValueByName("SEARCH_COLUMN"));
+        String searchText = xmlReader.getValueByName("SEARCH_TEXT");
+        int returnColumnText = Integer.parseInt(xmlReader.getValueByName("RETURN_COLUMN_TEXT"));
+
+        Boolean isEmpty = areParametersEmpty(url, tableId, searchColumn, searchText, returnColumnText);
+        if (!isEmpty)
         {
-            System.out.println("Table Found");
+            System.out.println("ONE OF THE PARAMS IS NULL OR EMPTY, PLEASE CHECK 'Resources.xml'");
         } else
-            System.out.println("Not Found");
+        {
+            try
+            {
+                guiHandler.openBrowser(url);
+                WebElement table = guiHandler.findElementByXPath(tableId);
+                if (table != null)
+                {
+                    System.out.println("Table Found");
+                    String Result = getTableCellText(table,searchColumn,searchText,returnColumnText);
+                    System.out.println("RESULT =\t" + Result);
+                } else
+                    System.out.println("Not Found");
 //        //table[@id='customers']/child::tbody/tr
 //        getTableCellText()
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
     public String getTableCellText(WebElement table, int searchColumn, String searchText, int returnColumnText) {
+        try
+        {
+            if (table != null)
+            {
+                System.out.println("Table Found");
+                String tableHeaderId = xmlReader.getValueByName("TABLE_HEADER_XPATH");
+                String tableCellsId = xmlReader.getValueByName("TABLE_CELLS_IN_ROWS_XPATH");
+
+                //WebElement tableHeader = guiHandler.findElementByXPath(tableHeaderId);
+
+                int numberOfColumns = guiHandler.countVisibleElementsByXPath(tableHeaderId); //3
+                int numberOfCells = guiHandler.countVisibleElementsByXPath(tableCellsId); //18
+
+                if (searchColumn <= numberOfColumns && returnColumnText <= numberOfColumns && numberOfCells != 0)
+                {
+                    List<WebElement> tableCells = guiHandler.findElementsByXPath(tableCellsId);
+
+
+                    WebElement x = guiHandler.getElementByIndex(tableCells, 0);
+                    System.out.println(x.getText());
+
+                } else
+                {
+                    System.out.println("THE SEARCH COLUMN OUT OF THE CURRENT TABLE");
+                }
+            } else
+                System.out.println("Not Found");
+//        //table[@id='customers']/child::tbody/tr
+//        getTableCellText()
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
     public boolean verifyTableCellText(WebElement table, int searchColumn, String searchText, int returnColumnText, String expectedText) {
-        String check = getTableCellText(table,searchColumn,searchText,returnColumnText);
+        String check = getTableCellText(table, searchColumn, searchText, returnColumnText);
         return check.equals(expectedText);
     }
 
@@ -63,8 +131,8 @@ public class Functions extends BaseTestCase {
     }
 
     @Test
-    public void toto(){
-        String x = xmlReader.getValueByName("EX","EX","URL");
+    public void toto() {
+        String x = xmlReader.getValueByName("EX", "EX", "URL");
         System.out.println(x);
     }
 }
