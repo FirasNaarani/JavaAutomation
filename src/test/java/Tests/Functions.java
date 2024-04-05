@@ -65,6 +65,29 @@ public class Functions extends BaseTestCase {
         return el.getText();
     }
 
+    private int getColumnIndexByText(String searchColumnText) {
+        int sc;
+        switch (searchColumnText)
+        {
+            case "Company":
+                sc = 1;
+                break;
+            case "Contact":
+                sc = 2;
+                break;
+            case "Country":
+                sc = 3;
+                break;
+            default:
+                return 0;
+        }
+        if (sc == returnColumnText)
+        {
+            Assert.fail("Can't Be 'Search Column' and 'Return Column' Same Value");
+        }
+        return sc;
+    }
+
     @BeforeClass
     public void SetUp() {
         // ENV Params
@@ -107,7 +130,6 @@ public class Functions extends BaseTestCase {
             WebElement table = guiHandler.findElementByXPath(tableId);
             if (table != null)
             {
-                System.out.println("Table Found");
                 String Result = getTableCellText(table, searchColumnInt, searchText, returnColumnText);
                 System.out.println("RESULT =\t" + Result);
             } else System.out.println("Not Found");
@@ -161,7 +183,8 @@ public class Functions extends BaseTestCase {
     }
 
     @Test
-    public void EX1_V3() {
+    //Using 'SearchColumnIndex'
+    public void EX1_V3_1() {
         try
         {
             String res = getTableCellTextByXpath(table, searchColumnInt, searchText, returnColumnText);
@@ -172,26 +195,21 @@ public class Functions extends BaseTestCase {
         }
     }
 
+    @Test
+    //Using 'SearchColumnText'
+    public void EX1_V3_2() {
+        try
+        {
+            String res = getTableCellTextByXpath(table, searchColumnText, searchText, returnColumnText);
+            System.out.println(res);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     public String getTableCellText(WebElement table, String searchColumn, String searchText, int returnColumnText) {
-        int sc;
-        switch (searchColumn)
-        {
-            case "Company":
-                sc = 1;
-                break;
-            case "Contact":
-                sc = 2;
-                break;
-            case "Country":
-                sc = 3;
-                break;
-            default:
-                return null;
-        }
-        if (sc == returnColumnText)
-        {
-            Assert.fail("Can't Be 'Search Column' and 'Return Column' Same Value");
-        }
+        int sc = getColumnIndexByText(searchColumn);
         return getTableCellText(table, sc, searchText, returnColumnText);
     }
 
@@ -292,5 +310,10 @@ public class Functions extends BaseTestCase {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String getTableCellTextByXpath(WebElement table, String searchColumn, String searchText, int returnColumnText) throws Exception {
+        int sc = getColumnIndexByText(searchColumn);
+        return getTableCellTextByXpath(table, sc, searchText, returnColumnText);
     }
 }
