@@ -7,13 +7,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 public class Functions extends BaseTestCase {
-
     String url = xmlReader.getValueByName("URL");
     String tableId = xmlReader.getValueByName("TABLE_XPATH");
     int searchColumnInt = Integer.parseInt(xmlReader.getValueByName("SEARCH_COLUMN_INT"));
@@ -162,6 +160,18 @@ public class Functions extends BaseTestCase {
         }
     }
 
+    @Test
+    public void EX1_V3() {
+        try
+        {
+            String res = getTableCellTextByXpath(table, searchColumnInt, searchText, returnColumnText);
+            System.out.println(res);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
     public String getTableCellText(WebElement table, String searchColumn, String searchText, int returnColumnText) {
         int sc;
         switch (searchColumn)
@@ -242,7 +252,45 @@ public class Functions extends BaseTestCase {
     }
 
     public String getTableCellTextByXpath(WebElement table, int searchColumn, String searchText, int returnColumnText) throws Exception {
+        try
+        {
+            if (table != null)
+            {
+                String tableHeaderId = xmlReader.getValueByName("TABLE_HEADER_XPATH");
+                String tableCellsId = xmlReader.getValueByName("GET_CELLS_BY_COLUMN_XPATH");
+                tableCellsId = String.format(tableCellsId, searchColumn);
 
+                int numberOfColumns = guiHandler.countVisibleElementsByXPath(tableHeaderId); //3
+                int numberOfCells = guiHandler.countVisibleElementsByXPath(tableCellsId); //6
+
+                if (searchColumn <= numberOfColumns && returnColumnText <= numberOfColumns && numberOfCells != 0)
+                {
+                    String cellXpathID = xmlReader.getValueByName("SEARCH_TEXT_XPATH");
+                    cellXpathID = String.format(cellXpathID, searchText);
+
+                    WebElement cell = guiHandler.findElementByXPath(cellXpathID);
+                    if (cell == null)
+                    {
+                        Assert.fail(String.format("Search Text = '%s', Wasn't Found in the Table", searchText));
+                    } else
+                    {
+                        System.out.println(cell.getText());
+                        List<WebElement> columnCells = guiHandler.findElementsByXPath(tableCellsId);
+                        int index = columnCells.indexOf(cell);
+                        String resXpath = xmlReader.getValueByName("GET_TABLE_CELL_TEXT_BY_XPATH");
+                        WebElement el = guiHandler.findElementByXPath(String.format(resXpath, returnColumnText, index + 1));
+
+                        return el.getText();
+                    }
+                } else
+                {
+                    System.out.println("THE SEARCH COLUMN OUT OF THE CURRENT TABLE");
+                }
+            } else System.out.println("Not Found");
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         return null;
     }
 }

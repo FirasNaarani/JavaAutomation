@@ -4,7 +4,7 @@
         <EX name="TABLE_XPATH" value="//table[@id='customers']"/>
         <EX name="SEARCH_COLUMN_INT" value="1"/>
         <EX name="SEARCH_COLUMN_TEXT" value="Company"/>
-        <EX name="SEARCH_TEXT" value="Island Trading"/>
+        <EX name="SEARCH_TEXT" value="Magazzini Alimentari Riuniti"/>
         <EX name="RETURN_COLUMN_TEXT" value="3"/> //Avoid 0 Column or Same 'SEARCH_COLUMN value
         <EX name="TABLE_ROWS_XPATH" value="//table[@id='customers']/tbody/tr"/>
         <EX name="TABLE_CELLS_IN_ROWS_XPATH" value="//table[@id='customers']/tbody/tr/td"/>
@@ -12,5 +12,7 @@
         <EX name="SEARCH_TEXT_XPATH" value="//table[@id='customers']/tbody/tr/td[text()='%s']"/>
         <EX name="EXPECTED_TEXT_PASS" value="UK"/>
         <EX name="EXPECTED_TEXT_FAIL" value="USA"/>
+        <EX name="GET_CELLS_BY_COLUMN_XPATH" value="//table[@id='customers']/tbody/tr/td[%d]"/>
+        <EX name="GET_TABLE_CELL_TEXT_BY_XPATH" value="(//table[@id='customers']/tbody/tr/td[%d])[%d]"/>
     </EX>
 </Resources>
