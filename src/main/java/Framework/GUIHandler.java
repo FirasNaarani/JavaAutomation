@@ -32,30 +32,29 @@ public class GUIHandler {
 
     // Method to find List<WebElement> by XPath with wait
     public List<WebElement> findElementsByXPath(String xpath) {
-        try {
+        try
+        {
             WebDriverWait wait = new WebDriverWait(driver, timeOut);
             return wait.until((ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath))));
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
             return null;
         }
     }
 
-    public boolean getColumnCellsElements(List<WebElement> list, int column, String text){
-        //TODO
-        return false;
-    }
-
-    public WebElement getElementByIndex(List<WebElement> list, int index){
+    public WebElement getElementByIndex(List<WebElement> list, int index) {
         return list.get(index);
     }
 
     // Method to find WebElement by XPath with wait
     public WebElement findElementByXPath(String xpath) {
-        try {
+        try
+        {
             WebDriverWait wait = new WebDriverWait(driver, timeOut);
             return wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
             return null;
         }
@@ -63,10 +62,12 @@ public class GUIHandler {
 
     // Method to find WebElement by ID with wait
     public WebElement findElementById(String id) {
-        try {
+        try
+        {
             WebDriverWait wait = new WebDriverWait(driver, timeOut);
             return wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
             return null;
         }
@@ -74,21 +75,25 @@ public class GUIHandler {
 
     // Method to find WebElement by CSS selector with wait
     public WebElement findElementByCssSelector(String cssSelector) {
-        try {
+        try
+        {
             WebDriverWait wait = new WebDriverWait(driver, timeOut);
             return wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(cssSelector)));
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
             return null;
         }
     }
 
     public int countVisibleElementsByXPath(String xpath) {
-        try {
+        try
+        {
             WebDriverWait wait = new WebDriverWait(driver, timeOut);
             List<WebElement> elements = wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath)));
             return elements.size();
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             e.printStackTrace();
             return 0;
         }

@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeClass;
 public class BaseTestCase {
     protected WebDriver driver;
     protected GUIHandler guiHandler;
-    protected  XMLReader xmlReader;
+    protected XMLReader xmlReader;
 
     String xmlFilePath = "Resources.xml";
 
@@ -17,9 +17,10 @@ public class BaseTestCase {
         this.guiHandler = new GUIHandler(driver);
         this.xmlReader = new XMLReader(xmlFilePath);
     }
+
     @BeforeClass
     public void setupClass() {
-        System.out.println(this.getClass().getSimpleName() + "\t|\tSetup\t-\tStart");
+        System.out.println(this.getClass().getSimpleName() + "\t|\tStart");
     }
 
     @AfterClass
@@ -30,8 +31,7 @@ public class BaseTestCase {
             driver.quit();
             driver = null;
         }
-        System.out.println(this.getClass().getSimpleName() + "\t|\tTear Down\t-\tDone");
+        System.out.println(this.getClass().getSimpleName() + "\t|\tDone");
     }
-
 
 }

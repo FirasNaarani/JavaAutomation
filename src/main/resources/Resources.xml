@@ -2,12 +2,15 @@
     <EX>
         <EX name="URL" value="https://www.w3schools.com/html/html_tables.asp"/>
         <EX name="TABLE_XPATH" value="//table[@id='customers']"/>
-        <EX name="SEARCH_COLUMN" value="1"/>
-        <EX name="SEARCH_TEXT" value="Maria Anders"/>
+        <EX name="SEARCH_COLUMN_INT" value="1"/>
+        <EX name="SEARCH_COLUMN_TEXT" value="Company"/>
+        <EX name="SEARCH_TEXT" value="Island Trading"/>
         <EX name="RETURN_COLUMN_TEXT" value="3"/> //Avoid 0 Column or Same 'SEARCH_COLUMN value
         <EX name="TABLE_ROWS_XPATH" value="//table[@id='customers']/tbody/tr"/>
         <EX name="TABLE_CELLS_IN_ROWS_XPATH" value="//table[@id='customers']/tbody/tr/td"/>
         <EX name="TABLE_HEADER_XPATH" value="//table[@id='customers']/tbody/tr[1]/th"/>
         <EX name="SEARCH_TEXT_XPATH" value="//table[@id='customers']/tbody/tr/td[text()='%s']"/>
+        <EX name="EXPECTED_TEXT_PASS" value="UK"/>
+        <EX name="EXPECTED_TEXT_FAIL" value="USA"/>
     </EX>
 </Resources>
