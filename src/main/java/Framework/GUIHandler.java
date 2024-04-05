@@ -86,6 +86,7 @@ public class GUIHandler {
         }
     }
 
+    // Method to count of elements
     public int countVisibleElementsByXPath(String xpath) {
         try
         {
@@ -99,15 +100,37 @@ public class GUIHandler {
         }
     }
 
-    // Method to set text to a WebElement
-    public void setText(WebElement element, String text) {
-        element.clear();
-        element.sendKeys(text);
+    // Method to click on a WebElement
+    public void clickElementByXpath(String xpath) {
+        try
+        {
+            WebDriverWait wait = new WebDriverWait(driver, timeOut);
+            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(xpath)));
+
+            element.click();
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
-    // Method to click on a WebElement
-    public void clickElement(WebElement element) {
-        element.click();
+    public void ClickItem(WebElement element, String item){
+        try{
+            String[] ListItems = item.split(";");
+            if(ListItems.length > 1){
+                clickElementByXpath(ListItems[0]);
+
+                for(int i =1;i<ListItems.length;i++){
+                    clickElementByXpath(ListItems[i]);
+                }
+            }
+            else {
+                clickElementByXpath(item);
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
 }

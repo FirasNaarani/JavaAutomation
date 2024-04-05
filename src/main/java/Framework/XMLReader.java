@@ -15,7 +15,11 @@ public class XMLReader {
     }
 
     public String getValueByName(String nameAttribute) {
-        return getValueByName("EX", "EX", nameAttribute);
+        return getValueByName("EX", "EX1", nameAttribute);
+    }
+
+    public String getValueByName(String tagName, String nameAttribute) {
+        return getValueByName("EX", tagName, nameAttribute);
     }
 
     public String getValueByName(String sectionName, String tagName, String nameAttribute) {

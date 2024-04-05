@@ -1,18 +1,28 @@
 <Resources>
     <EX>
-        <EX name="URL" value="https://www.w3schools.com/html/html_tables.asp"/>
-        <EX name="TABLE_XPATH" value="//table[@id='customers']"/>
-        <EX name="SEARCH_COLUMN_INT" value="1"/>
-        <EX name="SEARCH_COLUMN_TEXT" value="Company"/>
-        <EX name="SEARCH_TEXT" value="Island Trading"/>
-        <EX name="RETURN_COLUMN_TEXT" value="3"/> //Avoid 0 Column or Same 'SEARCH_COLUMN value
-        <EX name="TABLE_ROWS_XPATH" value="//table[@id='customers']/tbody/tr"/>
-        <EX name="TABLE_CELLS_IN_ROWS_XPATH" value="//table[@id='customers']/tbody/tr/td"/>
-        <EX name="TABLE_HEADER_XPATH" value="//table[@id='customers']/tbody/tr[1]/th"/>
-        <EX name="SEARCH_TEXT_XPATH" value="//table[@id='customers']/tbody/tr/td[text()='%s']"/>
-        <EX name="EXPECTED_TEXT_PASS" value="UK"/>
-        <EX name="EXPECTED_TEXT_FAIL" value="USA"/>
-        <EX name="GET_CELLS_BY_COLUMN_XPATH" value="//table[@id='customers']/tbody/tr/td[%d]"/>
-        <EX name="GET_TABLE_CELL_TEXT_BY_XPATH" value="(//table[@id='customers']/tbody/tr/td[%d])[%d]"/>
+        <!--EX2 ENV -->
+        <EX1 name="URL1" value="https://www.w3schools.com/html/html_tables.asp"/>
+        <EX1 name="TABLE_XPATH" value="//table[@id='customers']"/>
+        <EX1 name="SEARCH_COLUMN_INT" value="1"/>
+        <EX1 name="SEARCH_COLUMN_TEXT" value="Company"/>
+        <EX1 name="SEARCH_TEXT" value="Island Trading"/>
+        <EX1 name="RETURN_COLUMN_TEXT" value="3"/> //Avoid 0 Column or Same 'SEARCH_COLUMN value
+        <EX1 name="TABLE_ROWS_XPATH" value="//table[@id='customers']/tbody/tr"/>
+        <EX1 name="TABLE_CELLS_IN_ROWS_XPATH" value="//table[@id='customers']/tbody/tr/td"/>
+        <EX1 name="TABLE_HEADER_XPATH" value="//table[@id='customers']/tbody/tr[1]/th"/>
+        <EX1 name="SEARCH_TEXT_XPATH" value="//table[@id='customers']/tbody/tr/td[text()='%s']"/>
+        <EX1 name="EXPECTED_TEXT_PASS" value="UK"/>
+        <EX1 name="EXPECTED_TEXT_FAIL" value="USA"/>
+        <EX1 name="GET_CELLS_BY_COLUMN_XPATH" value="//table[@id='customers']/tbody/tr/td[%d]"/>
+        <EX1 name="GET_TABLE_CELL_TEXT_BY_XPATH" value="(//table[@id='customers']/tbody/tr/td[%d])[%d]"/>
+        <!--EX2 ENV -->
+        <EX2 name="URL2" value="https://demo.guru99.com"/>
+        <EX2 name ="FULL_PATH" value="Selenium;Table Demo"/>
+        <EX2 name ="MAIN_ITEM" value="Selenium"/>
+        <EX2 name ="SUB_ITEM" value="Table Demo"/>
+        <EX2 name ="NAVBAR_XPATH" value="//div[@id='navbar-brand-centered']/ul"/>
+        <EX2 name ="NAVBAR_MAIN_ITEM_XPATH" value="//div[@id='navbar-brand-centered']/ul/li/a[text()='%s']"/>
+        <EX2 name ="NAVBAR_SUB_ITEM_XPATH" value="//div[@id='navbar-brand-centered']/ul"/>
+        <!-- //div[@id='navbar-brand-centered']/ul/li[@class='dropdown open']/ul/li/a[text()='Table Demo']-->
     </EX>
 </Resources>

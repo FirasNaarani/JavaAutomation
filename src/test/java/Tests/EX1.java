@@ -11,18 +11,18 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-public class Functions extends BaseTestCase {
-    String url = xmlReader.getValueByName("URL");
-    String tableId = xmlReader.getValueByName("TABLE_XPATH");
-    int searchColumnInt = Integer.parseInt(xmlReader.getValueByName("SEARCH_COLUMN_INT"));
-    String searchColumnText = xmlReader.getValueByName("SEARCH_COLUMN_TEXT");
-    String searchText = xmlReader.getValueByName("SEARCH_TEXT");
-    int returnColumnText = Integer.parseInt(xmlReader.getValueByName("RETURN_COLUMN_TEXT"));
+public class EX1 extends BaseTestCase {
+    String url;
+    String tableId;
+    int searchColumnInt;
+    String searchColumnText;
+    String searchText;
+    int returnColumnText;
 
     WebElement table;
 
     //Constructor
-    public Functions() {
+    public EX1() {
         super(getChromeDriverWithMaximizedWindow());
     }
 
@@ -91,7 +91,7 @@ public class Functions extends BaseTestCase {
     @BeforeClass
     public void SetUp() {
         // ENV Params
-        this.url = xmlReader.getValueByName("URL");
+        this.url = xmlReader.getValueByName("URL1");
         this.tableId = xmlReader.getValueByName("TABLE_XPATH");
         this.searchColumnInt = Integer.parseInt(xmlReader.getValueByName("SEARCH_COLUMN_INT"));
         this.searchColumnText = xmlReader.getValueByName("SEARCH_COLUMN_TEXT");
@@ -127,12 +127,8 @@ public class Functions extends BaseTestCase {
     public void Ex1_v1_1() {
         try
         {
-            WebElement table = guiHandler.findElementByXPath(tableId);
-            if (table != null)
-            {
-                String Result = getTableCellText(table, searchColumnInt, searchText, returnColumnText);
-                System.out.println("RESULT =\t" + Result);
-            } else System.out.println("Not Found");
+            String Result = getTableCellText(table, searchColumnInt, searchText, returnColumnText);
+            System.out.println("RESULT =\t" + Result);
         } catch (Exception e)
         {
             e.printStackTrace();
